@@ -34,18 +34,14 @@ Usage() {
 }
 [ "$1" = "" ] && Usage
 
-# if the script is run outside of the EBC directory (e.g., in home directory where space is limited), terminate the script and show usage documentation
-if [[ ! "$PWD" =~ "/EBC/" ]]
-then Usage
-fi
-
+# if the script is run outside of the EBC directory (e.g., in home direct
 # define subjects from text document
 subjs=$(cat $1) 
 
 # define directories
 projDir=`cat ../../PATHS.txt`
 singularityDir="${projDir}/singularity_images"
-bidsDir="/EBC/preprocessedData/TEBC-5y/BIDs_data"
+bidsDIR="${projDir}/data/BIDS"
 derivDir="/EBC/preprocessedData/TEBC-5y/derivatives"
 
 # create derivatives directory if it doesn't exist
@@ -55,7 +51,7 @@ then
 fi
 
 # export freesurfer license file location
-export license=/EBC/local/infantFS/freesurfer/license.txt
+export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
 
 # change the location of the singularity cache ($HOME/.singularity/cache by default, but limited space in this directory)
 export SINGULARITY_TMPDIR=${singularityDir}

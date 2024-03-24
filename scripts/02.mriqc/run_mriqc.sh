@@ -12,39 +12,33 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_mriqc.sh <list of subjects>"
+    echo "./run_mriqc.sh <list of subjects> <study name>"
     echo
     echo "Example:"
-    echo "./run_mriqc.sh list.txt"
+    echo "./run_mriqc.sh list.txt STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run MRIQC on:"
     echo "001"
     echo "002"
 	echo "..."
     echo
-	echo
-	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
-	echo "The script will terminiate if run outside of the /EBC/ directory."
-	echo
-    echo "Script created by Melissa Thye"
+    echo "Script created by Melissa Thye and modified by Naiti Bhatt"
     echo
     exit
 }
-[ "$1" = "" ] && Usage
-
-# if the script is run outside of the EBC directory (e.g., in home directory where space is limited), terminate the script and show usage documentation
-if [[ ! "$PWD" =~ "/EBC/" ]]
-then Usage
-fi
+[ "$1" = "" ] || [ "$2" = "" ] && Usage
 
 # define subjects from text document
 subjs=$(cat $1) 
 
+# define study [directory] from text document
+study=$2
+
 # define directories
 projDir=`cat ../../PATHS.txt`
-singularityDir="$projDir/singularity_images"
-bidsDir="/EBC/preprocessedData/TEBC-5y/BIDs_data"
-qcDir="/EBC/preprocessedData/TEBC-5y/derivatives/mriqc"
+singularityDir=$(realpath ../../singularity_images)
+bidsDir="$projDir/$study/data/BIDS_anon"
+qcDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives/mriqc"
 
 # create QC and dvars directory if they don't exist
 if [ ! -d ${qcDir} ]
@@ -64,15 +58,17 @@ echo
 echo "Running MRIQC for..."
 echo "${subjs}"
 
-# change the location of the singularity cache ($HOME/.singularity/cache by default, but limited space in this directory)
+# we do not change the location of the singularity cache ($HOME/.singularity/cache by default, but limited space in this directory)
+# change the location of the singularity cac
 export SINGULARITY_TMPDIR=${singularityDir}
 export SINGULARITY_CACHEDIR=${singularityDir}
 unset PYTHONPATH
 
+
 # run MRIQC (https://mriqc.readthedocs.io/en/latest/running.html#singularity-containers)
 ## generate subject reports
-singularity run -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
-${singularityDir}/mriqc-23.1.0.simg																		\
+singularity run --cleanenv -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
+${singularityDir}/mriqc-23.2.0.simg																		\
 ${bidsDir} ${qcDir}																						\
 participant																								\
 --participant_label ${subjs}																			\
@@ -113,7 +109,7 @@ rm ${qcDir}/sub*.tsv
 
 ## generate group reports
 singularity run -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
-${singularityDir}/mriqc-23.1.0.simg																		\
+${singularityDir}/mriqc-23.2.0.simg																		\
 ${bidsDir} ${qcDir} group 																				\
 -m T1w bold
 
