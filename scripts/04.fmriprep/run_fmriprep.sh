@@ -57,7 +57,7 @@ echo "Running fMRIPrep for..."
 echo "${subjs}"
 
 # iterate for all subjects in the text file
-while read p
+while read p;
 do
 	ORIGINALNAME=` basename ${p} | cut -d '_' -f 1 `	# data folder name
 	NAME=` basename ${p} |  cut -d "-" -f 3 `			# subj number from folder name
@@ -67,7 +67,7 @@ do
 	echo
 
 	# run singularity
-	singularity run -C -B /EBC:/EBC,${singularityDir}:/opt/templateflow	\
+	singularity run --cleanenv	\
 	${singularityDir}/fmriprep-23.2.1.simg  							\
 	${bidsDir} ${derivDir}												\
 	participant															\
