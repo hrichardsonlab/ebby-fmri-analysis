@@ -57,13 +57,12 @@ echo "Running fMRIPrep for..."
 echo "${subjs}"
 
 # iterate for all subjects in the text file
-while read p;
-do
-	ORIGINALNAME=` basename ${p} | cut -d '_' -f 1 `	# data folder name
-	NAME=` basename ${p} |  cut -d "-" -f 3 `			# subj number from folder name
+for subj in ${subjs[@]}; do
+	# grab subjid
+	NAME=${subj##*-}
 	
 	echo
-	echo "Running fMRIprep for sub-${NAME}"
+	echo "Running fMRIprep for ${subj}"
 	echo
 
 	# run singularity
@@ -82,9 +81,8 @@ do
 	--derivatives ${derivDir}											\
 	--stop-on-first-crash												\
 	-w ${singularityDir}												\
-	--fs-license-file ${license}  > ${derivDir}/sub-${NAME}/log_fmriprep_sub-${NAME}.txt
+	--fs-license-file ${license}  > ${derivDir}/${subj}/log_fmriprep_${subj}.txt
 	
 	# give other users permissions to created files
-	chmod -R a+wrx ${derivDir}/sub-${NAME}
-
-done <$1
+	chmod -R a+wrx ${derivDir}/${subj}
+done
