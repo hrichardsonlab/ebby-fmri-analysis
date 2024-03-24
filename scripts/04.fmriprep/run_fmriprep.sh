@@ -82,9 +82,9 @@ for subj in ${subjs[@]}; do
 	--stop-on-first-crash												\
 	-w ${singularityDir}  \
  	--task-id mnm	\
- 	--verbose	\
+ 	--verbose --fs-no-reconall	\
 	--fs-license-file ${license}  > ${derivDir}/${subj}/log_fmriprep_${subj}.txt
 	
 	# give other users permissions to created files
-	chmod -R a+wrx ${derivDir}/${subj}
+	# chmod -R a+wrx ${derivDir}/${subj}
 done
