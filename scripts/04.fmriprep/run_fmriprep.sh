@@ -66,7 +66,7 @@ for subj in ${subjs[@]}; do
 	echo
 
 	# run singularity
-	singularity run --cleanenv --verbose	\
+	singularity run --cleanenv	\
 	${singularityDir}/fmriprep-23.2.1.simg  							\
 	${bidsDir} ${derivDir}												\
 	participant															\
