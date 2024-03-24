@@ -60,7 +60,7 @@ echo "${subjs}"
 NAMES=${subjs//sub-}
 
 # run singularity
-singularity run --cleanenv --verbose	\
+singularity run --cleanenv	\
 ${singularityDir}/fmriprep-23.2.1.simg  							\
 ${bidsDir} ${derivDir}												\
 participant															\
