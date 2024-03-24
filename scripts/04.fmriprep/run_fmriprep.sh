@@ -36,7 +36,7 @@ study=$2
 
 # define directories
 projDir=`cat ../../PATHS.txt`
-singularityDir=$(realpath ../../singularity_images)
+singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
 bidsDir="$projDir/$study/data/BIDS_anon"
 derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
 
@@ -66,7 +66,7 @@ for subj in ${subjs[@]}; do
 	echo
 
 	# run singularity
-	singularity run --cleanenv	\
+	singularity run --cleanenv --verbose	\
 	${singularityDir}/fmriprep-23.2.1.simg  							\
 	${bidsDir} ${derivDir}												\
 	participant															\
@@ -74,7 +74,7 @@ for subj in ${subjs[@]}; do
 	--skip_bids_validation												\
 	--nthreads 16														\
 	--omp-nthreads 16													\
-	--ignore slicetiming												\
+	--ignore slicetiming fieldmaps												\
 	--fd-spike-threshold 1												\
 	--dvars-spike-threshold 1.5											\
 	--output-space MNI152NLin2009cAsym:res-2 T1w						\
