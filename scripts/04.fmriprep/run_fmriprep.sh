@@ -38,7 +38,7 @@ study=$2
 projDir=`cat ../../PATHS.txt`
 singularityDir=$(realpath ../../singularity_images)
 bidsDir="$projDir/$study/data/BIDS_anon"
-derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives/"
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
 
 # export freesurfer license file location
 export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
