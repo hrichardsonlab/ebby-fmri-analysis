@@ -12,42 +12,36 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_fmriprep.sh <list of subjects>"
+    echo "./run_fmriprep.sh <list of subjects> <study name?"
     echo
     echo "Example:"
-    echo "./run_fmriprep.sh list.txt"
+    echo "./run_fmriprep.sh list.txt STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run fMRIPrep on:"
     echo "001"
     echo "002"
 	echo "..."
     echo
-	echo
-	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
-	echo "The script will terminiate if run outside of the /EBC/ directory."
-	echo
-    echo "Script created by Manuel Blesa & Melissa Thye"
+    echo "Script created by Manuel Blesa & Melissa Thye and modified by Naiti Bhatt"
     echo
     exit
 }
-[ "$1" = "" ] && Usage
-
-# if the script is run outside of the EBC directory (e.g., in home directory where space is limited), terminate the script and show usage documentation
-if [[ ! "$PWD" =~ "/EBC/" ]]
-then Usage
-fi
+[ "$1" = "" ] || [ "$2" = "" ] && Usage
 
 # define subjects from text document
 subjs=$(cat $1) 
 
+# define study [directory] from text document
+study=$2
+
 # define directories
 projDir=`cat ../../PATHS.txt`
-singularityDir="${projDir}/singularity_images"
-bidsDir="/EBC/preprocessedData/TEBC-5y/BIDs_data"
-derivDir="/EBC/preprocessedData/TEBC-5y/derivatives"
+singularityDir=$(realpath ../../singularity_images)
+bidsDir="$projDir/$study/data/BIDS_anon"
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives/"
 
 # export freesurfer license file location
-export license=/EBC/local/infantFS/freesurfer/license.txt
+export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
 
 # change the location of the singularity cache ($HOME/.singularity/cache by default, but limited space in this directory)
 export SINGULARITY_TMPDIR=${singularityDir}
