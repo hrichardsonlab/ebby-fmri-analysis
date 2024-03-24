@@ -80,7 +80,9 @@ for subj in ${subjs[@]}; do
 	--output-space MNI152NLin2009cAsym:res-2 T1w						\
 	--derivatives ${derivDir}											\
 	--stop-on-first-crash												\
-	-w ${singularityDir}												\
+	-w ${singularityDir}  \
+ 	--task-id mnm	\
+ 	--verbose	\
 	--fs-license-file ${license}  > ${derivDir}/${subj}/log_fmriprep_${subj}.txt
 	
 	# give other users permissions to created files
