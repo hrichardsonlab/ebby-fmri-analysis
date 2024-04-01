@@ -37,7 +37,7 @@ study=$2
 # define directories
 projDir=`cat ../../PATHS.txt`
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
-bidsDir="$projDir/$study/data/BIDS_anon"
+bidsDir="$projDir/$study/data/BIDS"
 derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
 
 # export freesurfer license file location

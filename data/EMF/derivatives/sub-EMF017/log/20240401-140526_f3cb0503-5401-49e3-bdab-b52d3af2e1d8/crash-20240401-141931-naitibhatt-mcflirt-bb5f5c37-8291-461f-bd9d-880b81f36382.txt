@@ -1,0 +1,56 @@
+Node: fmriprep_23_2_wf.sub_EMF017_wf.bold_task_mnm_run_001_wf.bold_fit_wf.bold_hmc_wf.mcflirt
+Working directory: /home/naitibhatt/ebby-fmri-analysis/singularity_images/fmriprep_23_2_wf/sub_EMF017_wf/bold_task_mnm_run_001_wf/bold_fit_wf/bold_hmc_wf/mcflirt
+
+Node inputs:
+
+args = <undefined>
+bins = <undefined>
+cost = <undefined>
+dof = <undefined>
+environ = {'FSLOUTPUTTYPE': 'NIFTI_GZ'}
+in_file = <undefined>
+init = <undefined>
+interpolation = <undefined>
+mean_vol = <undefined>
+out_file = <undefined>
+output_type = NIFTI_GZ
+ref_file = <undefined>
+ref_vol = <undefined>
+rotation = <undefined>
+save_mats = True
+save_plots = True
+save_rms = True
+scaling = <undefined>
+smooth = <undefined>
+stages = <undefined>
+stats_imgs = <undefined>
+use_contour = <undefined>
+use_gradient = <undefined>
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/pipeline/plugins/multiproc.py", line 67, in run_node
+    result["result"] = node.run(updatehash=updatehash)
+  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/pipeline/engine/nodes.py", line 527, in run
+    result = self._run_interface(execute=True)
+  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/pipeline/engine/nodes.py", line 645, in _run_interface
+    return self._run_command(execute)
+  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/pipeline/engine/nodes.py", line 771, in _run_command
+    raise NodeExecutionError(msg)
+nipype.pipeline.engine.nodes.NodeExecutionError: Exception raised while executing Node mcflirt.
+
+Cmdline:
+	mcflirt -in /home/naitibhatt/sgsss/data/datasets/EMF/data/BIDS/sub-EMF017/func/sub-EMF017_task-mnm_run-001_bold.nii.gz -out /home/naitibhatt/ebby-fmri-analysis/singularity_images/fmriprep_23_2_wf/sub_EMF017_wf/bold_task_mnm_run_001_wf/bold_fit_wf/bold_hmc_wf/mcflirt/sub-EMF017_task-mnm_run-001_bold_mcf.nii.gz -reffile /home/naitibhatt/sgsss/data/datasets/EMF/data/BIDS/sub-EMF017/func/sub-EMF017_task-mnm_run-001_bold.nii.gz -mats -plots -rmsabs -rmsrel
+Stdout:
+
+Stderr:
+
+Traceback:
+	Traceback (most recent call last):
+	  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/interfaces/base/core.py", line 400, in run
+	    outputs = self.aggregate_outputs(runtime)
+	  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/interfaces/base/core.py", line 429, in aggregate_outputs
+	    predicted_outputs = self._list_outputs()  # Predictions from _list_outputs
+	  File "/opt/conda/envs/fmriprep/lib/python3.10/site-packages/nipype/interfaces/fsl/preprocess.py", line 949, in _list_outputs
+	    _, _, _, timepoints = load(self.inputs.in_file).shape
+	ValueError: not enough values to unpack (expected 4, got 3)
+
