@@ -37,7 +37,7 @@ study=$2
 # define directories
 projDir=`cat ../../PATHS.txt`
 singularityDir=$(realpath ../../singularity_images)
-bidsDir="$projDir/$study/data/BIDS_anon"
+bidsDir="$projDir/$study/data/BIDS"
 qcDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives/mriqc"
 
 # create QC and dvars directory if they don't exist
