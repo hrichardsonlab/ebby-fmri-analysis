@@ -77,7 +77,7 @@ echo "${subjs}"
 NAMES=${subjs//sub-}
 
 # run singularity
-singularity run --cleanenv	\
+singularity run	\
 ${singularityDir}/fmriprep-23.2.1.simg  							\
 ${bidsDir} ${derivDir}												\
 participant															\
@@ -88,7 +88,7 @@ participant															\
   --anat-only															\
   --output-space MNI152NLin2009cAsym:res-2 T1w						\
   --derivatives ${derivDir}											\
-  --stop-on-first-crash												\
+  --stop-on-first-crash	--verbose											\
   -w ${singularityDir}												\
   --fs-license-file ${license}  > ${derivDir}/log_freesurfer.txt
 	
