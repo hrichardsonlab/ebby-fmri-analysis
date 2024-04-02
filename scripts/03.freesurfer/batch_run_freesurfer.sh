@@ -91,7 +91,9 @@ participant															\
   --stop-on-first-crash	--verbose											\
   -w ${singularityDir}												\
   --fs-license-file ${license}  # > ${derivDir}/log_freesurfer.txt
-	
+
+# move freesurfer output files to appropriate directory
+mv ${derivDir}/*dseg.tsv ${derivDir}/sourcedata/freesurfer
 
 # iterate for all subjects in the text file
 # iterate for all subjects in the text file
@@ -104,7 +106,6 @@ for subj in ${subjs[@]}; do
 	then
 		
 		# move subject report and freesurfer output files to appropriate directories
-		mv ${derivDir}/*dseg.tsv ${derivDir}/sourcedata/freesurfer
 		mv ${derivDir}/sub-${NAME}.html ${derivDir}/sub-${NAME}
 			
 		# give other users permissions to created files
