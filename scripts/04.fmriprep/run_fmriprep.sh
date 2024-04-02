@@ -81,7 +81,6 @@ for subj in ${subjs[@]}; do
 	--derivatives ${derivDir}											\
 	--stop-on-first-crash												\
 	-w ${singularityDir}  \
- 	--task-id mnm	\
  	--verbose --fs-no-reconall	\
 	--fs-license-file ${license}  > ${derivDir}/${subj}/log_fmriprep_${subj}.txt
 	
