@@ -14,10 +14,10 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_freesurfer.sh <list of subjects>"
+    echo "./run_freesurfer.sh <list of subjects> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "./run_freesurfer.sh list.txt"
+    echo "./run_freesurfer.sh list.txt STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
@@ -28,21 +28,27 @@ Usage() {
 	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
 	echo "The script will terminiate if run outside of the /EBC/ directory."
 	echo
-    echo "Script created by Manuel Blesa & Melissa Thye"
+    echo "Script created by Manuel Blesa & Melissa Thye and modified by Naiti Bhatt"
     echo
     exit
 }
-[ "$1" = "" ] && Usage
+[ "$1" = "" ] || [ "$2" = "" ] && Usage
 
 # if the script is run outside of the EBC directory (e.g., in home direct
 # define subjects from text document
 subjs=$(cat $1) 
 
+# define study [directory] from text document
+study=$2
+
 # define directories
 projDir=`cat ../../PATHS.txt`
-singularityDir="${projDir}/singularity_images"
-bidsDIR="${projDir}/data/BIDS"
-derivDir="/EBC/preprocessedData/TEBC-5y/derivatives"
+singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
+bidsDir="$projDir/$study/data/BIDS"
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
+
+# export freesurfer license file location
+export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
 
 # create derivatives directory if it doesn't exist
 if [ ! -d ${derivDir} ]
@@ -67,25 +73,24 @@ echo "Running Freesurfer via fMRIPrep for..."
 echo "${subjs}"
 
 # iterate for all subjects in the text file
-while read p
-do
-	
-	ORIGINALNAME=` basename ${p} | cut -d '_' -f 1 `	# data folder name
-	NAME=` basename ${p} |  cut -d "-" -f 3 `			# subj number from folder name
-	
+# iterate for all subjects in the text file
+for subj in ${subjs[@]}; do
+	# grab subjid
+	NAME=${subj##*-}
+ 
 	# check whether the file already exists
 	if [ ! -f ${derivDir}/sourcedata/freesurfer/sub-${NAME}/mri/aparc+aseg.mgz ]
 	then
 
 		echo
-		echo "Running anatomical workflow contained in fMRIprep for sub-${NAME}"
+		echo "Running anatomical workflow contained in fMRIprep for ${subj}"
 		echo
 		
 		# make output subject derivatives directory
-		mkdir -p ${derivDir}/sub-${NAME}
+		mkdir -p ${derivDir}/$subj
 
 		# run singularity
-		singularity run -C -B /EBC:/EBC,${singularityDir}:/opt/templateflow \
+		singularity run -C \
 		${singularityDir}/fmriprep-23.2.1.simg  							\
 		${bidsDir} ${derivDir}												\
 		participant															\
@@ -105,8 +110,8 @@ do
 		mv ${derivDir}/sub-${NAME}.html ${derivDir}/sub-${NAME}
 			
 		# give other users permissions to created files
-		chmod -R a+wrx ${derivDir}/sub-${NAME}
+		#chmod -R a+wrx ${derivDir}/sub-${NAME}
 
 	fi
 
-done <$1
+done
