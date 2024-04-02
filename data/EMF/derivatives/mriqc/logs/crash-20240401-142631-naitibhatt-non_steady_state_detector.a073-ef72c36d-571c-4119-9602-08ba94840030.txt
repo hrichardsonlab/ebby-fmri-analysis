@@ -1,0 +1,43 @@
+Node: mriqc_wf.funcMRIQC.non_steady_state_detector
+Working directory: /home/naitibhatt/ebby-fmri-analysis/singularity_images/mriqc_wf/funcMRIQC/_in_file_..home..naitibhatt..sgsss..data..datasets..EMF..data..BIDS..sub-EMF017..func..sub-EMF017_task-mnm_run-001_bold.nii.gz/non_steady_state_detector
+
+Node inputs:
+
+in_file = <undefined>
+
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.11/site-packages/mriqc/engine/plugin.py", line 60, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/nipype/pipeline/engine/nodes.py", line 527, in run
+    result = self._run_interface(execute=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/nipype/pipeline/engine/nodes.py", line 645, in _run_interface
+    return self._run_command(execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/nipype/pipeline/engine/nodes.py", line 771, in _run_command
+    raise NodeExecutionError(msg)
+nipype.pipeline.engine.nodes.NodeExecutionError: Exception raised while executing Node non_steady_state_detector.
+
+Traceback:
+	Traceback (most recent call last):
+	  File "/opt/conda/lib/python3.11/site-packages/nipype/interfaces/base/core.py", line 397, in run
+	    runtime = self._run_interface(runtime)
+	              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  File "/opt/conda/lib/python3.11/site-packages/nipype/algorithms/confounds.py", line 992, in _run_interface
+	    in_nii.dataobj[:, :, :, :50].mean(axis=0).mean(axis=0).mean(axis=0)
+	    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+	  File "/opt/conda/lib/python3.11/site-packages/nibabel/arrayproxy.py", line 463, in __getitem__
+	    return self._get_scaled(dtype=None, slicer=slicer)
+	           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  File "/opt/conda/lib/python3.11/site-packages/nibabel/arrayproxy.py", line 424, in _get_scaled
+	    scaled = apply_read_scaling(self._get_unscaled(slicer=slicer), scl_slope, scl_inter)
+	                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  File "/opt/conda/lib/python3.11/site-packages/nibabel/arrayproxy.py", line 390, in _get_unscaled
+	    if canonical_slicers(slicer, self._shape, False) == canonical_slicers(
+	       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  File "/opt/conda/lib/python3.11/site-packages/nibabel/fileslice.py", line 112, in canonical_slicers
+	    dim_len = shape[n_real]
+	              ~~~~~^^^^^^^^
+	IndexError: tuple index out of range
+
