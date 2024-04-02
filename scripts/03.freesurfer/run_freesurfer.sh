@@ -90,7 +90,7 @@ for subj in ${subjs[@]}; do
 		mkdir -p ${derivDir}/$subj
 
 		# run singularity
-		singularity run -C \
+		singularity run \
 		${singularityDir}/fmriprep-23.2.1.simg  							\
 		${bidsDir} ${derivDir}												\
 		participant															\
