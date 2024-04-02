@@ -90,7 +90,7 @@ participant															\
   --derivatives ${derivDir}											\
   --stop-on-first-crash	--verbose											\
   -w ${singularityDir}												\
-  --fs-license-file ${license}  > ${derivDir}/log_freesurfer.txt
+  --fs-license-file ${license}  # > ${derivDir}/log_freesurfer.txt
 	
 
 # iterate for all subjects in the text file
