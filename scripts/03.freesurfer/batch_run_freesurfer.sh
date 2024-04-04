@@ -88,7 +88,7 @@ participant															\
   --anat-only															\
   --output-space MNI152NLin2009cAsym:res-2 T1w						\
   --derivatives ${derivDir}											\
-  --stop-on-first-crash	--verbose											\
+  --verbose											\
   -w ${singularityDir}												\
   --fs-license-file ${license}  # > ${derivDir}/log_freesurfer.txt
 
