@@ -67,7 +67,7 @@ unset PYTHONPATH
 
 # run MRIQC (https://mriqc.readthedocs.io/en/latest/running.html#singularity-containers)
 ## generate subject reports
-singularity run --cleanenv -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
+singularity run -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
 ${singularityDir}/mriqc-23.2.0.simg																		\
 ${bidsDir} ${qcDir}																						\
 participant																								\
