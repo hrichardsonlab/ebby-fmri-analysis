@@ -72,7 +72,7 @@ ${singularityDir}/mriqc-23.2.0.simg																		\
 ${bidsDir} ${qcDir}																						\
 participant																								\
 --participant_label ${subjs}																			\
---no-sub 																								\
+--no-sub --n_cpus 16																								\
 --fd_thres 1																							\
 -m T1w bold																								\
 -w ${singularityDir}
