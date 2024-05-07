@@ -74,7 +74,7 @@ participant																								\
 --participant_label ${subjs}																			\
 --no-sub --n_cpus 16																								\
 --fd_thres 1																							\
--m T1w bold																								\
+-m T1w bold dwi																								\
 -w ${singularityDir}
 
 # extract dvars timeseries
