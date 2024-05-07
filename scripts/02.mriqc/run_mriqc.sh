@@ -111,7 +111,7 @@ rm ${qcDir}/sub*.tsv
 singularity run -B ${bidsDir}:${bidsDir} -B ${qcDir}:${qcDir} -B ${singularityDir}:${singularityDir}	\
 ${singularityDir}/mriqc-23.2.0.simg																		\
 ${bidsDir} ${qcDir} group 																				\
--m T1w bold
+-m T1w bold dwi
 
 # remove hidden files in singularity directory to avoid space issues
 rm ${singularityDir}/.mriqc*
