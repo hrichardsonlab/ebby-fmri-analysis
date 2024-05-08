@@ -14,10 +14,10 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_freesurfer.sh <list of subjects> <STUDYNAME>"
+    echo "./run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "./run_freesurfer.sh list.txt STUDYNAME"
+    echo "./run_freesurfer.sh list.txt PATHTOPROJECT STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
@@ -32,23 +32,22 @@ Usage() {
     echo
     exit
 }
-[ "$1" = "" ] || [ "$2" = "" ] && Usage
+[ "$1" = "" ] || [ "$2" = "" ] || [ "$3" = "" ] && Usage
 
 # if the script is run outside of the EBC directory (e.g., in home direct
 # define subjects from text document
 subjs=$(cat $1) 
 
-# define study [directory] from text document
+# define study [directory] from input
 study=$2
 
+# define project directory from input
+projDir=$3
+
 # define directories
-projDir=`cat ../../PATHS.txt`
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
 bidsDir="$projDir/$study/data/BIDS"
-derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
-
-# export freesurfer license file location
-export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives" # move the contents of this directory to the project directory after running!!!!
 
 # create derivatives directory if it doesn't exist
 if [ ! -d ${derivDir} ]
