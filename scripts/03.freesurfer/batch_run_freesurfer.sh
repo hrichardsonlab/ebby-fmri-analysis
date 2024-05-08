@@ -38,11 +38,12 @@ Usage() {
 # define subjects from text document
 subjs=$(cat $1) 
 
-# define study [directory] from input
-study=$2
-
 # define project directory from input
-projDir=$3
+projDir=$2
+
+# define study [directory] from input
+study=$3
+
 
 # define directories
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
