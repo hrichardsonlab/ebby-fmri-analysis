@@ -12,33 +12,36 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_fmriprep.sh <list of subjects> <study name?"
+    echo "./run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "./run_fmriprep.sh list.txt STUDYNAME"
+    echo "bash ./run_freesurfer.sh /PATH/TO/FILE/list.txt /PATH/TO/BIDS STUDYNAME"
     echo
-    echo "list.txt is a file containing the participants to run fMRIPrep on:"
+    echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
     echo "002"
 	echo "..."
     echo
+	echo
     echo "Script created by Manuel Blesa & Melissa Thye and modified by Naiti Bhatt"
     echo
     exit
 }
-[ "$1" = "" ] || [ "$2" = "" ] && Usage
+[ "$1" = "" ] || [ "$2" = "" ] || [ "$3" = "" ] && Usage
 
+# if the script is run outside of the EBC directory (e.g., in home direct
 # define subjects from text document
 subjs=$(cat $1) 
 
-# define study [directory] from text document
-study=$2
+# define study [directory] from input
+bidsDir=$2
+
+# define study name
+study=$3
 
 # define directories
-projDir=`cat ../../PATHS.txt`
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
-bidsDir="$projDir/$study/data/BIDS"
-derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives" # move the contents of this directory to the project directory after running!!!!
 
 # export freesurfer license file location
 export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
@@ -66,7 +69,7 @@ for subj in ${subjs[@]}; do
 	echo
 
 	# run singularity
-	singularity run --cleanenv	\
+	singularity run	\
 	${singularityDir}/fmriprep-23.2.1.simg  							\
 	${bidsDir} ${derivDir}												\
 	participant															\
@@ -74,14 +77,14 @@ for subj in ${subjs[@]}; do
 	--skip_bids_validation												\
 	--nthreads 16														\
 	--omp-nthreads 16													\
-	--ignore slicetiming fieldmaps												\
+	--ignore slicetiming												\
 	--fd-spike-threshold 1												\
 	--dvars-spike-threshold 1.5											\
 	--output-space MNI152NLin2009cAsym:res-2 T1w						\
 	--derivatives ${derivDir}											\
 	--stop-on-first-crash												\
 	-w ${singularityDir}  \
- 	--verbose --fs-no-reconall	\
+ 	--verbose	\
 	--fs-license-file ${license}  > ${derivDir}/${subj}/log_fmriprep_${subj}.txt
 	
 	# give other users permissions to created files

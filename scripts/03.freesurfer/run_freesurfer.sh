@@ -14,10 +14,10 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_freesurfer.sh <list of subjects> <STUDYNAME>"
+    echo "./run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "./run_freesurfer.sh list.txt STUDYNAME"
+    echo "bash ./run_freesurfer.sh /PATH/TO/FILE/list.txt /PATH/TO/BIDS STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
@@ -25,27 +25,25 @@ Usage() {
 	echo "..."
     echo
 	echo
-	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
-	echo "The script will terminiate if run outside of the /EBC/ directory."
-	echo
     echo "Script created by Manuel Blesa & Melissa Thye and modified by Naiti Bhatt"
     echo
     exit
 }
-[ "$1" = "" ] || [ "$2" = "" ] && Usage
+[ "$1" = "" ] || [ "$2" = "" ] || [ "$3" = "" ] && Usage
 
 # if the script is run outside of the EBC directory (e.g., in home direct
 # define subjects from text document
 subjs=$(cat $1) 
 
-# define study [directory] from text document
-study=$2
+# define study [directory] from input
+bidsDir=$2
+
+# define study name
+study=$3
 
 # define directories
-projDir=`cat ../../PATHS.txt`
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
-bidsDir="$projDir/$study/data/BIDS"
-derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives"
+derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives" # move the contents of this directory to the project directory after running!!!!
 
 # export freesurfer license file location
 export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt

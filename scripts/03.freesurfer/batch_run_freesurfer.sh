@@ -17,16 +17,13 @@ Usage() {
     echo "./run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "./run_freesurfer.sh list.txt PATHTOPROJECT STUDYNAME"
+    echo "bash ./run_freesurfer.sh /PATH/TO/FILE/list.txt /PATH/TO/BIDS STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
     echo "002"
 	echo "..."
     echo
-	echo
-	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
-	echo "The script will terminiate if run outside of the /EBC/ directory."
 	echo
     echo "Script created by Manuel Blesa & Melissa Thye and modified by Naiti Bhatt"
     echo
@@ -38,16 +35,14 @@ Usage() {
 # define subjects from text document
 subjs=$(cat $1) 
 
-# define project directory from input
-projDir=$2
-
 # define study [directory] from input
-study=$3
+bidsDir=$2
 
+# define study name
+study=$3
 
 # define directories
 singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
-bidsDir="$projDir/$study/data/BIDS"
 derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives" # move the contents of this directory to the project directory after running!!!!
 
 # create derivatives directory if it doesn't exist
