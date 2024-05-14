@@ -44,10 +44,10 @@ study=$3
 # sub study name
 substudy=$4
 
-derivDir=$(if [ "$substudy" = "" ]; then echo "/home/naitibhatt/$study/ebby-fmri-analysis/data/derivatives"; else echo "/home/naitibhatt/$study/ebby-fmri-analysis/data//$substudy/derivatives"; fi)
+derivDir=$(if [ "$substudy" = "" ]; then echo "/home/naitibhatt/$study/ebby-fmri-analysis/data/derivatives"; else echo "/home/naitibhatt/$study/ebby-fmri-analysis/data/$substudy/derivatives"; fi)
 
 # define directories
-singularityDir="/home/naitibhatt/$study/ebby-fmri-analysis/singularity_images"
+singularityDir="/home/naitibhatt/singularity_images"
 
 # create derivatives directory if it doesn't exist
 if [ ! -d ${derivDir} ]
