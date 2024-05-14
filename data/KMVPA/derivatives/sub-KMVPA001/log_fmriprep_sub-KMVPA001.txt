@@ -1,2 +1,0 @@
-240402-10:48:54,717 cli INFO:
-	 Telemetry system to collect crashes and errors is enabled - thanks for your feedback!. Use option ``--notrack`` to opt out.
