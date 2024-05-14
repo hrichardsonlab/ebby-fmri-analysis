@@ -43,12 +43,8 @@ study=$3
 
 # sub study name
 substudy=$4
-if [ "$substudy" = "" ] 
-then
-	derivDir="/home/naitibhatt/$study/ebby-fmri-analysis/data/derivatives" # move the contents of this directory to the project directory after running!!!!
-else
-	derivDir="/home/naitibhatt/$study/ebby-fmri-analysis/data//$substudy/derivatives" # move the contents of this directory to the project directory after running!!!!
-fi
+
+derivDir=$(if [ "$substudy" = "" ]; then echo "/home/naitibhatt/$study/ebby-fmri-analysis/data/derivatives"; else echo "/home/naitibhatt/$study/ebby-fmri-analysis/data//$substudy/derivatives"; fi)
 
 # define directories
 singularityDir="/home/naitibhatt/$study/ebby-fmri-analysis/singularity_images"
