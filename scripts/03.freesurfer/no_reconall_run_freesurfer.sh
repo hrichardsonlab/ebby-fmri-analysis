@@ -14,10 +14,10 @@ Usage() {
     echo
 	echo
     echo "Usage:"
-    echo "./run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
+    echo "./no_recon_run_freesurfer.sh <list of subjects> <project directory> <STUDYNAME>"
     echo
     echo "Example:"
-    echo "bash ./run_freesurfer.sh /PATH/TO/FILE/list.txt /PATH/TO/BIDS STUDYNAME"
+    echo "bash ./no_recon_run_freesurfer.sh /PATH/TO/FILE/list.txt /PATH/TO/BIDS STUDYNAME"
     echo
     echo "list.txt is a file containing the participants to run Freesurfer on:"
     echo "001"
@@ -42,11 +42,8 @@ bidsDir=$2
 study=$3
 
 # define directories
-singularityDir="/home/naitibhatt/ebby-fmri-analysis/singularity_images"
-derivDir="/home/naitibhatt/ebby-fmri-analysis/data/$study/derivatives" # move the contents of this directory to the project directory after running!!!!
-
-# export freesurfer license file location
-export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
+singularityDir="/home/naitibhatt/$study/ebby-fmri-analysis/singularity_images"
+derivDir="/home/naitibhatt/$study/ebby-fmri-analysis/data/derivatives" # move the contents of this directory to the project directory after running!!!!
 
 # create derivatives directory if it doesn't exist
 if [ ! -d ${derivDir} ]
@@ -55,7 +52,7 @@ then
 fi
 
 # export freesurfer license file location
-export license=/home/naitibhatt/ebby-fmri-analysis/freesurfer.txt
+export license=/home/naitibhatt/$study/ebby-fmri-analysis/freesurfer.txt
 
 # change the location of the singularity cache ($HOME/.singularity/cache by default, but limited space in this directory)
 export SINGULARITY_TMPDIR=${singularityDir}
